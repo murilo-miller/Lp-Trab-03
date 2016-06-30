@@ -49,7 +49,7 @@ public class prog {
 				ativo(cod, desc, prec, quant);
 			} else if (op == 6) {
 				// Efetuar venda
-				venda(cod, desc, prec, quant);
+				venda(cod, prec, quant);
 			}
 			System.out.println();
 			menu();
@@ -219,34 +219,34 @@ public class prog {
 	 * @param prec
 	 * @param quant
 	 */
-	public static void venda(int cod[], String desc[], double prec[], double quant[]) {
+	public static void venda(int cod[], double preco[], double quant[]) {
 		@SuppressWarnings("resource")
 		Scanner sc = new Scanner(System.in);
 		sc.useLocale(Locale.ENGLISH);
 		Locale.setDefault(new Locale("en", "US"));
-
-		int i, j, codVen, qtdVen, pos;
-		System.out.println("Digite o código do produto: ");
-		codVen = sc.nextInt();
+		
+		int i,p, qtdVenda, cont = 0;
+		
+		System.out.println("\tVENDA");
+		System.out.print("Digite o código do produto: ");
+		p=sc.nextInt();
 		for (i = 0; i < cod.length; i++) {
-			if (codVen == cod[i]) {
-				pos = i;
-				System.out.println("Informe a quantidade a ser vendida: ");
-				qtdVen = sc.nextInt();
-				for (j = 0; j < cod.length; j++) {
-					if (quant[pos] < qtdVen) {
-						System.out.println("Quantidade Insuficiente, voltando ao menu.");
-						System.out.println();
-					} else {
-						quant[pos] = quant[pos] - qtdVen;
-						System.out.println("Termino da venda.");
-					}
+			if (p == cod[i]) {
+				System.out.print("Qual a quantidade do produto: ");
+				qtdVenda = sc.nextInt();
+				if (quant[i] - qtdVenda < 0){
+					System.out.println("Quantidade insuficiente.");
+				} else {
+					quant[i] = quant[i] - qtdVenda;
+					System.out.println("Venda realizada com sucesso!");
 				}
-			} 
-			else {
-				System.out.println("Código Inexistente, voltando ao menu");
-				System.out.println();
+			} else {
+				cont++;
 			}
+		}
+		
+		if (cont == cod.length) {
+			System.out.println("Código inexistente.");
 		}
 	}
 }
